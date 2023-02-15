@@ -35,6 +35,7 @@ const App: FC<Props> = ({ originData, ...rest }) => {
       options={targetOptions}
       expandTrigger="hover"
       changeOnSelect
+      placeholder="请选择"
       showSearch={{ filter, limit: 9999999999 }}
       {...rest}
     />

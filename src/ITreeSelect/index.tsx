@@ -18,11 +18,9 @@ const App: FC<Props> = ({ originData, ...rest }) => {
   return (
     <TreeSelect
       showSearch
-      style={{ width: 318 }}
       dropdownStyle={{ maxHeight: 600, overflow: 'auto' }}
       placeholder="请选择"
       allowClear
-      treeCheckable
       showCheckedStrategy="SHOW_PARENT"
       treeDefaultExpandAll
       treeData={targetTreeData}

@@ -1,6 +1,6 @@
 import { Radio, RadioGroupProps } from 'antd';
 import React, { type FC } from 'react';
-import { normalizeSelectData } from '/Users/tnn/Desktop/myProject/sandra-components/src/tools';
+import { normalizeSelectData } from 'sandra-components/tools';
 
 interface Props extends RadioGroupProps {
   iLabelKey?: string;
@@ -14,13 +14,7 @@ const IRadio: FC<Props> = ({ iLabelKey, iValueKey, originData, ...rest }) => {
       ? normalizeSelectData(iLabelKey, iValueKey, originData)
       : rest?.options || [];
 
-  return (
-    <Radio.Group
-      defaultValue={'null'}
-      {...rest}
-      options={[{ label: '全部', value: 'null' }].concat(targetOptions)}
-    ></Radio.Group>
-  );
+  return <Radio.Group {...rest} options={targetOptions} />;
 };
 
 export default IRadio;

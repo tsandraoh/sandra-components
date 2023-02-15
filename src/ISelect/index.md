@@ -30,7 +30,6 @@ const App: React.FC = () => (
     showSearch
     style={{ width: 218 }}
     originData={orgData}
-    placeholder="请选择"
     iLabelKey="name"
     iValueKey="key"
   />

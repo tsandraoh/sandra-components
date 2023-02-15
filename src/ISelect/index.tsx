@@ -1,7 +1,7 @@
 import { Select, SelectProps } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import React, { type FC } from 'react';
-import { normalizeSelectData } from '/Users/tnn/Desktop/myProject/sandra-components/src/tools';
+import { normalizeSelectData } from 'sandra-components/tools';
 
 interface Props extends SelectProps {
   iLabelKey?: string;
@@ -14,7 +14,9 @@ const ISelect: FC<Props> = ({ iLabelKey, iValueKey, originData, ...rest }) => {
     iLabelKey && iValueKey && originData
       ? normalizeSelectData(iLabelKey, iValueKey, originData)
       : rest?.options;
-  return <Select allowClear {...rest} options={targetOptions} />;
+  return (
+    <Select allowClear placeholder="请选择" {...rest} options={targetOptions} />
+  );
 };
 
 export default ISelect;

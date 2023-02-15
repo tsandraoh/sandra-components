@@ -63,6 +63,7 @@ const onChange = (value: string[]) => {
 const App: React.FC = () => (
   <ITreeSelect
     showSearch
+    treeCheckable
     style={{ width: 318 }}
     originData={orgData}
     onChange={onChange}

@@ -76,7 +76,6 @@ const App: React.FC = () => (
     style={{ width: 318 }}
     originData={orgData}
     onChange={onChange}
-    placeholder="请选择"
   />
 );
 

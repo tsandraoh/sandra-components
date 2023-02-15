@@ -17,20 +17,15 @@
 import { IRadio } from 'sandra-components';
 
 const orgData = [
-  { cName: 'keep', ckey: 1 },
-  { cName: 'early', ckey: 2 },
-  { cName: 'hours', ckey: 3 },
-  { cName: 'hello', ckey: 4 },
-  { cName: 'word', ckey: 5 },
+  { cName: 'keep', cKey: 1 },
+  { cName: 'early', cKey: 2 },
+  { cName: 'hours', cKey: 3 },
+  { cName: 'hello', cKey: 4 },
+  { cName: 'word', cKey: 5 },
 ];
 
 const App: React.FC = () => (
-  <IRadio
-    optionType="button"
-    originData={orgData}
-    iLabelKey="cName"
-    iValueKey="cKey"
-  />
+  <IRadio originData={orgData} iLabelKey="cName" iValueKey="cKey" />
 );
 
 export default App;
