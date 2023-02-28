@@ -206,3 +206,90 @@ export const FieldsConfig: Field[] = [
   //   },
   // },
 ];
+
+export const InitTransferData = [
+  {
+    id: 'shanghai',
+    name: '上海',
+    children: [
+      {
+        id: 'hongkou',
+        name: '虹口',
+        children: [
+          {
+            id: '2001',
+            name: '门店1',
+          },
+          {
+            id: '2002',
+            name: '门店2',
+          },
+          {
+            id: '2003',
+            name: '门店3',
+          },
+        ],
+      },
+      {
+        id: 'pudong',
+        name: '浦东新区',
+        children: [
+          {
+            id: '2004',
+            name: '门店4',
+          },
+          {
+            id: '2005',
+            name: '门店5',
+          },
+          {
+            id: '2006',
+            name: '门店6',
+          },
+        ],
+      },
+      {
+        id: 'jingan',
+        name: '静安',
+        children: [
+          {
+            id: '2007',
+            name: '门店7',
+          },
+          {
+            id: '2008',
+            name: '门店8',
+          },
+          {
+            id: '2009',
+            name: '门店9',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'suzhou',
+    name: '苏州',
+    children: [
+      {
+        id: 'shangchengqu',
+        name: '虎丘区',
+        children: [
+          {
+            id: '20010',
+            name: '门店10',
+          },
+          {
+            id: '20011',
+            name: '门店11',
+          },
+          {
+            id: '20012',
+            name: '门店12',
+          },
+        ],
+      },
+    ],
+  },
+];

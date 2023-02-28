@@ -1,10 +1,7 @@
 import { TreeSelect } from 'antd';
 import { TreeSelectProps } from 'antd/es/tree-select';
 import React, { type FC } from 'react';
-import {
-  InitTreeNode,
-  normalizeDataForTreeSelect,
-} from 'sandra-components/tools';
+import { InitTreeNode, normalizeDataForTree } from 'sandra-components/tools';
 
 type Props = TreeSelectProps & {
   originData?: InitTreeNode[];
@@ -13,7 +10,7 @@ type Props = TreeSelectProps & {
 const App: FC<Props> = ({ originData, ...rest }) => {
   const targetTreeData =
     originData !== undefined
-      ? normalizeDataForTreeSelect(originData)
+      ? normalizeDataForTree(originData)
       : rest?.treeData || [];
   return (
     <TreeSelect

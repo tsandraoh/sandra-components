@@ -1,5 +1,13 @@
 import { DefaultOptionType } from 'antd/es/cascader';
-import { TreeSelectProps } from 'antd/es/tree-select';
+// import { TreeSelectProps } from 'antd/es/tree-select';
+
+interface Node {
+  title: string;
+  key: string | number;
+  value: string | number;
+  disabled?: boolean;
+  children?: Node[];
+}
 
 export function normalizeSelectData(
   iLabelKey: string,
@@ -13,9 +21,9 @@ export function normalizeSelectData(
 }
 //
 export interface InitTreeNode {
-  id: number;
+  id: number | string;
   name: string;
-  children: InitTreeNode[];
+  children?: InitTreeNode[];
 }
 
 export function normalizeDataForCascader(
@@ -32,14 +40,10 @@ export function normalizeDataForCascader(
   });
 }
 
-export function normalizeDataForTreeSelect(
-  originData: InitTreeNode[],
-): TreeSelectProps[] {
+export function normalizeDataForTree(originData: InitTreeNode[]): Node[] {
   return (originData || []).map((node) => {
     const { id, name, children } = node;
-    const newChildren: TreeSelectProps[] = normalizeDataForTreeSelect(
-      children || [],
-    );
+    const newChildren: Node[] = normalizeDataForTree(children || []);
     return {
       title: name,
       value: id,
