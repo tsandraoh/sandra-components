@@ -1,5 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Col, Input, Row, Space, Tree } from 'antd';
+import { Col, Input, Row, Tree } from 'antd';
 import React, { useMemo, useState, type FC } from 'react';
 import { InitTransferData } from 'sandra-components/data';
 import { normalizeDataForTree } from 'sandra-components/tools';
@@ -19,6 +19,11 @@ const ITransfer: FC = () => {
     return treeData;
   }, [keyWord, treeData]);
 
+  // const onCheck = (checkedKeys: string[], info) => {
+  //   console.log(checkedKeys: string[], info);
+
+  // };
+
   return (
     <div>
       <Row className="info-area">
@@ -29,19 +34,22 @@ const ITransfer: FC = () => {
             onSearch={(v: string) => setKeyWord(v)}
           />
           <div className="overflow-col">
-            <Tree className="tree-select-width" treeData={targetTreeData} />
+            <Tree
+              checkable
+              defaultExpandAll
+              className="tree-select-width"
+              treeData={targetTreeData}
+            />
           </div>
         </Col>
         <Col span={12}>
-          <Row justify="space-between" className="list-col">
-            <Space>
-              <span>
-                已选&nbsp;
-                <span className="title">{(selectedShops || []).length}</span>
-                &nbsp;家门店
-              </span>
-              <a onClick={() => {}}>全部删除</a>
-            </Space>
+          <Row justify={'space-between'} align="middle" className="list-col">
+            <span>
+              已选&nbsp;
+              <span className="title">{(selectedShops || []).length}</span>
+              &nbsp;家门店
+            </span>
+            <a onClick={() => {}}>全部删除</a>
           </Row>
           <div className="overflow-col">
             {(selectedShops || []).map((shop, index: number) => (
