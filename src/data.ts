@@ -219,6 +219,20 @@ export const InitTransferData = [
           {
             id: '2001',
             name: '门店1',
+            children: [
+              {
+                id: '2001111',
+                name: '门店1-1',
+              },
+              {
+                id: '2001222',
+                name: '门店1-2',
+              },
+              {
+                id: '2001333',
+                name: '门店1-3',
+              },
+            ],
           },
           {
             id: '2002',

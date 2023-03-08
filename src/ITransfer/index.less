@@ -1,22 +1,42 @@
-.tree-select-width {
-  width: 218px;
+.treesearchvalue {
+  color: #f50;
 }
 
-.info-area {
-  .overflow-col {
-    height: 368px;
-    padding: '0 18px';
-    width: '100%';
-    overflow-y: scroll;
-    margin-top: 18px;
+.info {
+  border: 1px solid #e4e9ec;
+  padding: 18px;
+  border-radius: 8px;
+
+  .tree-col {
+    padding: 0 16px !important;
+
+    .tree-select-width {
+      width: 218px;
+    }
   }
 
   .list-col {
-    padding: 0 24px;
-    line-height: 32px;
+    border-left: 1px solid #e4e9ec;
+    padding: 0 16px !important;
 
-    .title {
-      color: #1677ff;
+    .list-head {
+      line-height: 32px;
+
+      .count {
+        color: #1677ff;
+      }
     }
+
+    .delete-icon {
+      width: 18;
+      cursor: pointer;
+    }
+  }
+
+  .overflow-comon {
+    height: 368px;
+    width: '100%';
+    overflow-y: scroll;
+    margin-top: 18px;
   }
 }

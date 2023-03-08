@@ -16,3 +16,11 @@ export interface Field {
   // form item props
   itemProps?: FormItemProps;
 }
+
+export interface Node {
+  title: string;
+  key: string | number;
+  value: string | number;
+  disabled?: boolean;
+  children?: Node[];
+}

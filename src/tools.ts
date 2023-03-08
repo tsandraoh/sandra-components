@@ -1,13 +1,6 @@
 import { DefaultOptionType } from 'antd/es/cascader';
 // import { TreeSelectProps } from 'antd/es/tree-select';
-
-interface Node {
-  title: string;
-  key: string | number;
-  value: string | number;
-  disabled?: boolean;
-  children?: Node[];
-}
+import { Node } from './definition';
 
 export function normalizeSelectData(
   iLabelKey: string,
