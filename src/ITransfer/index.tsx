@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { Col, Input, Row, Tree } from 'antd';
 import React, { useMemo, useState, type FC } from 'react';
-import { InitTransferData } from 'sandra-components/data';
+// import { InitTransferData } from 'sandra-components/data';
 import { Node } from 'sandra-components/definition';
 import { normalizeDataForTree } from 'sandra-components/tools';
 import './index.less';
@@ -9,6 +9,12 @@ import './index.less';
 interface Item {
   id: string;
   name: string;
+  children?: Item[];
+}
+interface Props {
+  initData: Item[];
+  value?: string[];
+  onChange?: (v: string[]) => void;
 }
 
 function matchedNodeByKeyWord(data: Node[], keyWord: string) {
@@ -35,19 +41,13 @@ function matchedNodeByKeyWord(data: Node[], keyWord: string) {
   });
 }
 
-const ITransfer: FC = () => {
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
+const ITransfer: FC<Props> = ({ value, initData, ...rest }) => {
+  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(value || []);
   const [keyWord, setKeyWord] = useState<string>();
-  const [treeData] = useState(normalizeDataForTree(InitTransferData));
+  const [treeData] = useState(normalizeDataForTree(initData));
 
   const targetTreeData = useMemo(() => {
     if (!keyWord) return treeData;
-    // function matchedNodeByKeyWord(data: Node[]) {
-    //   return (data || []).filter(({ title, children }) => {
-    //     matchedNodeByKeyWord(children);
-    //     return title.indexOf(keyWord) > -1
-    //   })
-    // }
     return matchedNodeByKeyWord(treeData, keyWord);
   }, [keyWord, treeData]);
 
@@ -89,6 +89,7 @@ const ITransfer: FC = () => {
               checkedKeys={checkedKeys}
               onCheck={setCheckedKeys}
               onSelect={setCheckedKeys}
+              {...rest}
             />
           </div>
         </Col>
