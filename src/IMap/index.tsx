@@ -1,16 +1,37 @@
 import { APILoader, Map, Marker } from '@uiw/react-amap';
-import { Select } from 'antd';
-import React, { type FC } from 'react';
+import React, { useState, type FC } from 'react';
+import request from 'umi-request';
+import DebounceSelect from './debounceSelect';
 
 import './index.less';
 
+interface Option {
+  label: string;
+  value: string;
+}
+
 const IMap: FC = () => {
-  //  https://restapi.amap.com/v3/assistant/inputtips?parameters?key=d079d062b4ad200ef5cd0117b00c451b&keywords=${''}
-  const onSearch = (value: string) => {
-    console.log(value, '--value');
-  };
+  const [position, setPosition] = useState('121.472644, 31.231706');
+
+  async function query(username: string): Promise<Option[]> {
+    return request
+      .get(
+        `https://restapi.amap.com/v3/assistant/inputtips?key=ccd42ebf871361d006beae0a870263f3&keywords=${username}`,
+      )
+      .then((res) => {
+        const { tips } = res;
+        const optionsRes = (tips || []).map(
+          ({ name, location }: { name: string; location: string }) => ({
+            label: name,
+            value: location,
+          }),
+        );
+        return Promise.resolve(optionsRes);
+      });
+  }
 
   const InnerMap = () => {
+    const parsedPosition: number[] = position.split(',').map((i) => Number(i));
     /**
      * zoom?:
      * 	地图显示的缩放级别，可以设置为浮点数；若center与level未赋值，地图初始化默认显示用户所在城市范围。
@@ -21,7 +42,7 @@ const IMap: FC = () => {
           <Marker
             visiable={true}
             title="上海市"
-            position={new AMap.LngLat(121.472644, 31.231706)}
+            position={new AMap.LngLat(parsedPosition[0], parsedPosition[1])}
           />
         </Map>
       </div>
@@ -30,11 +51,14 @@ const IMap: FC = () => {
 
   return (
     <div>
-      <Select
+      <DebounceSelect
         showSearch
         className="search-wrap"
         placeholder="请输入关键词搜索"
-        onSearch={onSearch}
+        fetchOptions={query}
+        onChange={(newValue: string) => {
+          setPosition(newValue);
+        }}
       />
       <APILoader akay="d079d062b4ad200ef5cd0117b00c451b">
         <InnerMap />
