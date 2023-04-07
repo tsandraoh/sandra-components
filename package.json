@@ -48,6 +48,7 @@
     "@ant-design/pro-form": "^2.5.6",
     "@uiw/react-amap": "^4.5.2",
     "antd": "^5.2.0",
+    "moment": "^2.29.4",
     "ts-mock-server": "^0.0.5",
     "umi-request": "^1.0.3"
   },

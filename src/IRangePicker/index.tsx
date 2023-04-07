@@ -2,25 +2,31 @@ import { DatePicker } from 'antd';
 import moment, { Moment } from 'moment';
 import React, { useState } from 'react';
 
-// 便捷动态周期
 const { RangePicker } = DatePicker;
 
 type RangeValue = [Moment | null, Moment | null] | null;
 interface Props {
-  disabled?: boolean;
+  unitOfTime?: moment.unitOfTime.Diff | undefined;
+  diffNum?: 2;
   value?: RangeValue;
   onChange?: (value: RangeValue) => void;
 }
-const App: React.FC<Props> = ({ value, ...rest }) => {
+const App: React.FC<Props> = ({
+  value,
+  unitOfTime = 'M',
+  diffNum = 2,
+  onChange,
+  ...rest
+}) => {
   const [dates, setDates] = useState<RangeValue>(null);
+  const [values, setValues] = useState<RangeValue>(value || null);
 
-  const disabledDate = (current: Moment) => {
+  const disabledDate = (current: any) => {
     if (!dates) {
       return false;
     }
-
-    const tooLate = dates[0] && current.diff(dates[0], 'M') >= 2;
-    const tooEarly = dates[1] && dates[1].diff(current, 'M') >= 2;
+    const tooLate = dates[0] && current.diff(dates[0], unitOfTime) >= diffNum;
+    const tooEarly = dates[1] && dates[1].diff(current, unitOfTime) >= diffNum;
     return !!tooEarly || !!tooLate || current > moment();
   };
 
@@ -35,10 +41,14 @@ const App: React.FC<Props> = ({ value, ...rest }) => {
   return (
     <RangePicker
       picker="month"
-      value={dates || (value as any)}
+      value={dates || (values as any)}
       disabledDate={disabledDate}
-      onCalendarChange={(val) => setDates(val)}
+      onCalendarChange={(val: any) => setDates(val)}
       onOpenChange={onOpenChange}
+      onChange={(val: any) => {
+        setValues(val);
+        if (onChange) onChange(val);
+      }}
       {...rest}
     />
   );
