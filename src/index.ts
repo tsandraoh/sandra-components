@@ -6,5 +6,6 @@ export { default as IMap } from './IMap';
 export { default as IRadio } from './IRadio';
 export { default as IRangePicker } from './IRangePicker';
 export { default as ISelect } from './ISelect';
+export { default as ITag } from './ITag';
 export { default as ITransfer } from './ITransfer';
 export { default as ITreeSelect } from './ITreeSelect';
