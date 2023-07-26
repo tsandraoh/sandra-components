@@ -16,7 +16,7 @@ export interface ContainerState {
 }
 
 const Groups: React.FC<any> = ({ groups, setGroups }) => {
-  const tags: Item[] = groups;
+  const tags: Item[] = groups || [];
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [editInputIndex, setEditInputIndex] = useState(-1);
@@ -33,13 +33,6 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
   useEffect(() => {
     editInputRef.current?.focus();
   }, [inputValue]);
-
-  const onDelete = (removedTagId: number) => {
-    console.log(removedTagId, '----removedTagId');
-
-    // setGroups
-    // { id: removedTagId }
-  };
 
   const showInput = () => {
     setInputVisible(true);
@@ -60,8 +53,8 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
       if (tags.findIndex(({ text }) => text === iValue) !== -1) {
         return message.error('标签名称不能重复');
       } else {
-        // return addGroup({ regionId: id, name: inputValue });
-        // setGroups
+        const nextId = tags.length + 1;
+        setGroups([...tags, { id: nextId, text: inputValue }]);
         setInputVisible(false);
         setInputValue('');
         return;
@@ -78,17 +71,29 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
     setInputValue('');
   };
 
-  const handleEditInputConfirm = () => {
+  const handleEditInputConfirm = (editId: number) => {
     const iValue = editInputValue.replaceAll(' ', '');
     if (iValue) {
       if (tags.findIndex(({ text }) => text === iValue) !== -1) {
         return message.error('标签名称不能重复');
       } else {
-        // return updateGroup({ regionId: id, name: editInputValue, id: editTagId });
+        const editIndex = tags.findIndex(({ id }) => id === editId);
+        tags.splice(editIndex, 1, { id: editId, text: iValue });
+        setGroups(tags);
       }
     } else return message.error('标签名称不能为空');
     setEditInputIndex(-1);
     setInputValue('');
+  };
+
+  const handleDelete = (deleteId: number) => {
+    const newTags: Item[] = [];
+    let newIndex = 0;
+    tags.forEach(({ id, text }) => {
+      if (id !== deleteId) newTags.push({ id: newIndex, text });
+      newIndex++;
+    });
+    setGroups(newTags);
   };
 
   const tagInputStyle: React.CSSProperties = {
@@ -97,7 +102,6 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
   };
 
   const tagPlusStyle: React.CSSProperties = {
-    // background: 'pink',
     borderStyle: 'dashed',
     padding: '0.5rem 1rem',
   };
@@ -114,7 +118,7 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
   }, []);
 
   const renderCard = useCallback(
-    (card: { id: number; text: string }, index: number) => {
+    (card: Item, index: number) => {
       return (
         <Card
           key={card.id}
@@ -122,13 +126,13 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
           id={card.id}
           text={card.text}
           moveCard={moveCard}
-          handleClose={onDelete}
+          handleClose={handleDelete}
           setEditInputIndex={setEditInputIndex}
           setEditInputValue={setEditInputValue}
         />
       );
     },
-    [],
+    [tags],
   );
 
   return (
@@ -136,7 +140,7 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
       <DndProvider backend={HTML5Backend}>
         <Space size={[0, 8]} wrap>
           {tags.map(({ text, id }, index) => {
-            if (editInputIndex === index && id !== 0) {
+            if (editInputIndex === index) {
               return (
                 <Input
                   ref={editInputRef}
@@ -146,7 +150,7 @@ const Groups: React.FC<any> = ({ groups, setGroups }) => {
                   value={editInputValue}
                   onChange={handleEditInputChange}
                   onBlur={handleEditByBlur}
-                  onPressEnter={() => handleEditInputConfirm()}
+                  onPressEnter={() => handleEditInputConfirm(id)}
                 />
               );
             }

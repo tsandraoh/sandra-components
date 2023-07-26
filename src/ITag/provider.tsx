@@ -17,7 +17,7 @@ export interface CardProps {
   text: string;
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
-  handleClose: any;
+  handleClose: (deleteId: number) => void;
   setEditInputIndex?: any;
   setEditInputValue?: any;
   styles?: any;
@@ -36,6 +36,7 @@ export const Card: FC<CardProps> = ({
   moveCard,
   setEditInputIndex,
   setEditInputValue,
+  handleClose,
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -45,7 +46,6 @@ export const Card: FC<CardProps> = ({
     { handlerId: Identifier | null }
   >({
     accept: ItemTypes.CARD,
-    // canDrop: () => id !== 0,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -86,7 +86,6 @@ export const Card: FC<CardProps> = ({
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
-    // canDrag: id !== 0,
     item: () => {
       return { id, index };
     },
@@ -104,15 +103,14 @@ export const Card: FC<CardProps> = ({
       data-handler-id={handlerId}
       {...rest}
       key={id}
-      closable={id !== 0}
+      closable
+      onClose={() => handleClose(id)}
     >
       <span
         onDoubleClick={(e) => {
-          if (index !== 0) {
-            setEditInputIndex(index);
-            setEditInputValue(text);
-            e.preventDefault();
-          }
+          setEditInputIndex(index);
+          setEditInputValue(text);
+          e.preventDefault();
         }}
       >
         {text}
