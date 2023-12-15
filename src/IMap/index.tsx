@@ -55,7 +55,7 @@ const IMap: FC = () => {
           setPosition(newValue);
         }}
       />
-      <APILoader akay="d079d062b4ad200ef5cd0117b00c451b">
+      <APILoader akay="">
         <InnerMap />
       </APILoader>
     </div>
