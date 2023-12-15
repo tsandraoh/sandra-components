@@ -13,23 +13,18 @@ interface Option {
 const IMap: FC = () => {
   const [position, setPosition] = useState('121.472644, 31.231706');
 
-  async function query(username: string): Promise<Option[]> {
-    return request
-      .get(
-        `https://restapi.amap.com/v3/assistant/inputtips?key=ccd42ebf871361d006beae0a870263f3&keywords=${username}`,
-      )
-      .then((res) => {
-        const { tips } = res;
-        const optionsRes = (tips || []).map(
-          ({ name, location }: { name: string; location: string }) => ({
-            label: name,
-            value: location,
-          }),
-        );
-        return Promise.resolve(optionsRes);
-      });
+  async function query(): Promise<Option[]> {
+    return request.get(``).then((res) => {
+      const { tips } = res;
+      const optionsRes = (tips || []).map(
+        ({ name, location }: { name: string; location: string }) => ({
+          label: name,
+          value: location,
+        }),
+      );
+      return Promise.resolve(optionsRes);
+    });
   }
-
   const InnerMap = () => {
     const parsedPosition: number[] = position.split(',').map((i) => Number(i));
     /**
